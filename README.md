@@ -1,4 +1,4 @@
-![](https://img.shields.io/badge/release-v0.5.0-gold)  
+![](https://img.shields.io/badge/release-v0.6.0-gold)  
 ![](https://img.shields.io/badge/python-v3.10.1-blue)
 
 ![](https://img.shields.io/badge/passed_tests-0-brightgreen)
