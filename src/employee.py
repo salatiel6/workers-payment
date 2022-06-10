@@ -1,6 +1,9 @@
+import re
+
 from datetime import datetime, timedelta
 
-from ioet_challenge.src.constants import WEEK_DAYS, WEEKEND_DAYS, PERIODS,\
+from ioet_challenge.src.exceptions import FilePatternError
+from ioet_challenge.src.constants import WEEK_DAYS, WEEKEND_DAYS, PERIODS, \
     HOUR_PAYMENT_VALUES
 
 
@@ -13,6 +16,9 @@ class Employee:
 
     def get_employee_data(self, worked_schedule):
         worker_checkpoint = worked_schedule.rstrip()
+
+        if not self.validate_schedule(worked_schedule):
+            raise FilePatternError()
 
         worker_name = worker_checkpoint.split("=")[0]
         worker_schedule = worker_checkpoint.split("=")[1]
@@ -40,6 +46,23 @@ class Employee:
                 amount += self.get_hour_payment(day, period)
 
         return amount
+
+    @staticmethod
+    def validate_schedule(worker_schedule: str) -> bool:
+        rgx = "^(?:MO|TU|WE|TH|FR|SA|SU)(?:0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]" \
+              "-(?:0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]"
+        if worker_schedule.count("=") != 1:
+            return False
+        if worker_schedule.split("=")[0][-1] == ",":
+            return False
+
+        worked_time = [worked for worked in
+                       worker_schedule.split("=")[1].split(",")]
+        for worked_day in worked_time:
+            if not re.findall(rgx, worked_day):
+                return False
+
+        return True
 
     @staticmethod
     def get_period(time) -> str:

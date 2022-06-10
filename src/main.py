@@ -21,19 +21,5 @@ def payment(file="../worked_schedules.txt") -> None:
         )
 
 
-def get_employee_data(worked_schedule) -> {}:
-    worker_checkpoint = worked_schedule.rstrip()
-
-    worker_name = worker_checkpoint.split("=")[0]
-    worker_schedule = worker_checkpoint.split("=")[1]
-
-    worked_time = [worked for worked in worker_schedule.split(",")]
-
-    return {
-        "name": worker_name,
-        "worked_time": worked_time
-    }
-
-
 if __name__ == '__main__':
     payment()
