@@ -9,6 +9,10 @@ class TestEmployee(TestCase):
         with self.assertRaises(FileError):
             main.payment("test_file.txt")
 
+    def test_right_input(self):
+        input = "JOHN=FR02:00-03:00,SA17:00-18:00,SU20:00-21:00"
+        Employee(input)
+
     def test_input_out_of_pattern(self):
         invalid_inputs = self.create_invalid_inputs()
 
@@ -33,5 +37,6 @@ class TestEmployee(TestCase):
             "sdkurghsidfrjgh",
             "AZSDFSAD=ASDFSDAF"
             "RENE=MO55:00-12:00,TU10:00-12:00,SA14:00-18:00,SU20:00-21:00",
-            "RENE=MO10:00-12:00,TU10:00-12:00,SA14:00-18:99,SU20:00-21:00"
+            "RENE=MO10:00-12:00,TU10:00-12:00,SA14:00-18:99,SU20:00-21:00",
+            "RENEMO10:00-12:00=TU10:00-12:00,SA14:00-18:00,SU20:00-21:00"
         ]

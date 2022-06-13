@@ -1,3 +1,6 @@
+> ![](https://img.shields.io/badge/Jun_10,_2022-black) ![](https://img.shields.io/badge/v0.7.2-FIX-green)  
+> `Regex not catching some new tested invalid inputs`
+
 > ![](https://img.shields.io/badge/Jun_10,_2022-black) ![](https://img.shields.io/badge/v0.7.1-FIX-green)  
 > `Regex not catching some invalid inputs`
  

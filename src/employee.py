@@ -49,18 +49,13 @@ class Employee:
 
     @staticmethod
     def validate_schedule(worker_schedule: str) -> bool:
-        rgx = "^(?:MO|TU|WE|TH|FR|SA|SU)(?:0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]" \
-              "-(?:0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]"
-        if worker_schedule.count("=") != 1:
-            return False
-        if worker_schedule.split("=")[0][-1] == ",":
-            return False
+        rgx = "^(?:[A-Z]+)=(?:(?:MO|TU|WE|TH|FR|SA|SU)" \
+              "(?:0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]-(?:0[0-9]|1[0-9]|2[0-3]):" \
+              "[0-5][0-9](?:,|))+"
 
-        worked_time = [worked for worked in
-                       worker_schedule.split("=")[1].split(",")]
-        for worked_day in worked_time:
-            if not re.findall(rgx, worked_day):
-                return False
+        if not re.findall(rgx, worker_schedule) or \
+                re.findall(rgx, worker_schedule)[0] != worker_schedule.strip():
+            return False
 
         return True
 
