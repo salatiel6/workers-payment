@@ -1,4 +1,7 @@
-> ![](https://img.shields.io/badge/Jun_10,_2022-black) ![](https://img.shields.io/badge/v0.7.2-FIX-green)  
+> ![](https://img.shields.io/badge/Jun_13,_2022-black) ![](https://img.shields.io/badge/v0.7.3-REFACTOR-red)  
+> `'input' variable to 'valid_input', for stopping overshadowing built-in`
+
+> ![](https://img.shields.io/badge/Jun_13,_2022-black) ![](https://img.shields.io/badge/v0.7.2-FIX-green)  
 > `Regex not catching some new tested invalid inputs`
 
 > ![](https://img.shields.io/badge/Jun_10,_2022-black) ![](https://img.shields.io/badge/v0.7.1-FIX-green)  

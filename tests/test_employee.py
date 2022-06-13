@@ -5,6 +5,9 @@ from ioet_challenge.src.exceptions import FileError, FilePatternError
 
 
 class TestEmployee(TestCase):
+    def test_valid_file(self):
+        main.payment("../worked_schedules.txt")
+
     def test_create_file_if_not_exists(self):
         with self.assertRaises(FileError):
             main.payment("test_file.txt")
