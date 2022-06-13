@@ -1,3 +1,6 @@
+> ![](https://img.shields.io/badge/Jun_13,_2022-black) ![](https://img.shields.io/badge/v0.7.4-REFACTOR-red)  
+> `Included worked_schedule variable in __init__ so it can used within self`
+
 > ![](https://img.shields.io/badge/Jun_13,_2022-black) ![](https://img.shields.io/badge/v0.7.3-REFACTOR-red)  
 > `'input' variable to 'valid_input', for stopping overshadowing built-in`
 

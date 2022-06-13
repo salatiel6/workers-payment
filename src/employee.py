@@ -11,17 +11,16 @@ class Employee:
     def __init__(self, worked_schedule: str):
         self.name = ""
         self.worked_time = ""
-        self.get_employee_data(worked_schedule)
+        self.worked_schedule = worked_schedule
+        self.get_employee_data()
         self.payment_amount = self.calculate_payment_amount()
 
-    def get_employee_data(self, worked_schedule):
-        worker_checkpoint = worked_schedule.rstrip()
-
-        if not self.validate_schedule(worked_schedule):
+    def get_employee_data(self):
+        if not self.validate_schedule():
             raise FilePatternError()
 
-        worker_name = worker_checkpoint.split("=")[0]
-        worker_schedule = worker_checkpoint.split("=")[1]
+        worker_name = self.worked_schedule.split("=")[0]
+        worker_schedule = self.worked_schedule.split("=")[1]
 
         worked_time = [worked for worked in worker_schedule.split(",")]
 
@@ -47,14 +46,14 @@ class Employee:
 
         return amount
 
-    @staticmethod
-    def validate_schedule(worker_schedule: str) -> bool:
+    def validate_schedule(self) -> bool:
         rgx = "^(?:[A-Z]+)=(?:(?:MO|TU|WE|TH|FR|SA|SU)" \
               "(?:0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]-(?:0[0-9]|1[0-9]|2[0-3]):" \
               "[0-5][0-9](?:,|))+"
 
-        if not re.findall(rgx, worker_schedule) or \
-                re.findall(rgx, worker_schedule)[0] != worker_schedule.strip():
+        if not re.findall(rgx, self.worked_schedule) or \
+                re.findall(rgx, self.worked_schedule)[0] != \
+                self.worked_schedule:
             return False
 
         return True

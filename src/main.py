@@ -13,7 +13,7 @@ def payment(file="../worked_schedules.txt") -> None:
     f.close()
 
     for worked_schedule in worked_schedules:
-        employee = Employee(worked_schedule)
+        employee = Employee(worked_schedule.rstrip())
 
         print(
             f"The amount to pay {employee.name} is: "
