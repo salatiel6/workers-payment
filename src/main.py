@@ -15,10 +15,7 @@ def payment(file="../worked_schedules.txt") -> None:
     for worked_schedule in worked_schedules:
         employee = Employee(worked_schedule.rstrip())
 
-        print(
-            f"The amount to pay {employee.name} is: "
-            f"{employee.payment_amount} USD"
-        )
+        print(employee)
 
 
 if __name__ == '__main__':

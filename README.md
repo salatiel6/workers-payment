@@ -16,27 +16,26 @@ The first thing the function do, is to check if the param file exists:
 if not os.path.isfile(file):
     raise FileError()
 ```
-If not, a custom error is raised, explainig what happened, and what should be done:
+If not, a custom error is raised `FileError`, explainig what happened, and what should be done:
 ```
 The employee schedule file was not found.
 Please attach your file in the root of the project
 By default, the file should be called 'worked_schedules.txt'. But you can use another name.
 Just remember to put your custom file name in the params of payment() function
 ```
----
-After validating that the file exists, the function read its content, allocating every line inside worked schedules list:
+After validating that the file exists, the function read its content, allocating every line inside `worked_schedules` list:
 ```
 f = open(file, "r")
     worked_schedules = f.readlines()
     f.close()
 ```
----
+
 Then, for every line, we create an instance of the `Employee` class:
 ```
 for worked_schedule in worked_schedules:
     employee = Employee(worked_schedule.rstrip())
 ```
-> *Obs**: The `Employee` class, can be called just passing the schedule string in the right format, e.g:
+> *Obs**: The `Employee` class, can be called just passing the schedule string in the right format:
 > ```
 > >>> from ioet_challenge.src.employee import Employee
 > >>> worker_schedule = "ROBERT=MO06:00-12:00,WE11:00-15:00,TH01:00-03:00,FR15:00-18:00,SA19:00-21:00"
@@ -54,22 +53,18 @@ for worked_schedule in worked_schedules:
 > 325
 > ```
 
+Finishing, we print the `employee__str__`, which contains the name, and the amount for the employee:
+```
+print(employee)
+```
 ---
-Finishing, we print the name, and the amount for each employee at the file:
-```
-print(
-    f"The amount to pay {employee.name} is: "
-    f"{employee.payment_amount} USD"
-)
-```
-
 ### The `employee.py` module
 It's the module that contains the Employee class, which its methods make all the necessary validations and processes for 
 calculating the payment amount.  
 
 Its `__init__` method receives the `worked_schedule` variable, which must contain a line of `worked_schedules.txt`. This line must be a string
-in the default format, e.g: "JOHN=FR02:00-03:00,SA17:00-18:00,SU20:00-21:00".  
-As we can see, the name, and the worked_time of an employee, is on the file. So the variables `name` and `worked_time` are initiated as empty strings.  
+in the default format, e.g: `"JOHN=FR02:00-03:00,SA17:00-18:00,SU20:00-21:00"`.  
+As we can see, the name, and the worked time of an employee, is on the file. So the variables `name` and `worked_time` are initiated as empty strings.  
 After that, the method `get_employee_data()` will be responsable for bringing value to these variables.
 ```
 def __init__(self, worked_schedule: str):
@@ -102,7 +97,7 @@ def get_employee_data(self):
 > **5.** (end of statement) - `(?:,|)`: After the enterign and exiting times, the string must have a ',' if there's another one after. Or must finish without any symbol  
 > `(?:)+`: Encapsulates parts from 2 to 5, telling that it must have one or more ocurrences  
 > 
-> After that we use `re.findall` to discover if the expression is valid. If it is we return True, if not, False:
+> After that we use `re.findall()` to discover if the expression is valid. If it is we return `True`, if not, `False`:
 >```
 >  if not re.findall(rgx, self.worked_schedule) or \
 >          re.findall(rgx, self.worked_schedule)[0] != \
@@ -111,6 +106,11 @@ def get_employee_data(self):
 >
 >  return True
 > ```
+If the input is not valid, a custom error is raised `FilePatternError`, explainig what happened, and what should be done:
+```
+The employee schedule file is out of the pattern.
+Please review your file content
+```
 With everythin valid, lets split the string in two parts, through `=` signal.  
 `worker_name` receives the name at index 0  
 `worker_schedule` receives the rest of the string containing the days and times worked:
@@ -127,7 +127,7 @@ After all we set the name and the working time in them respective variables:
 self.name = worker_name
 self.worked_time = worked_time
 ```
----
+
 With `worker_name` and `worked_time` set, we still need to set the employee payment amount, and what does it, is the `calculate_payment_amount()`
 ```
 self.payment_amount = self.calculate_payment_amount()
@@ -235,3 +235,10 @@ HOUR_PAYMENT_VALUES = {
     }
 }
 ```
+Finishing, the `Employee` class also contains a `__str__` method, which describes the payment amount:
+```
+def __str__(self):
+    return f"The amount to pay {self.name} is: " \
+           f"{self.payment_amount} USD"
+```
+---

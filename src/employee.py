@@ -15,6 +15,10 @@ class Employee:
         self.get_employee_data()
         self.payment_amount = self.calculate_payment_amount()
 
+    def __str__(self):
+        return f"The amount to pay {self.name} is: " \
+               f"{self.payment_amount} USD"
+
     def get_employee_data(self):
         if not self.validate_schedule():
             raise FilePatternError()

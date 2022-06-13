@@ -1,3 +1,12 @@
+> ![](https://img.shields.io/badge/Jun_13,_2022-black) ![](https://img.shields.io/badge/v0.9.0-FEAT-blue)  
+> `New tests for default and custom files`
+
+> ![](https://img.shields.io/badge/Jun_13,_2022-black) ![](https://img.shields.io/badge/v0.8.0-FEAT-blue)  
+> `Added __str__ method to Employee class`
+
+> ![](https://img.shields.io/badge/Jun_13,_2022-black) ![](https://img.shields.io/badge/v0.7.5-REFACTOR-red)  
+> `Removed constants that weren't used anymore`
+
 > ![](https://img.shields.io/badge/Jun_13,_2022-black) ![](https://img.shields.io/badge/v0.7.4-REFACTOR-red)  
 > `Included worked_schedule variable in __init__ so it can used within self`
 
