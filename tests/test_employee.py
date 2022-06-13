@@ -9,9 +9,9 @@ class TestEmployee(TestCase):
         with self.assertRaises(FileError):
             main.payment("test_file.txt")
 
-    def test_right_input(self):
-        input = "JOHN=FR02:00-03:00,SA17:00-18:00,SU20:00-21:00"
-        Employee(input)
+    def test_valid_input(self):
+        valid_input = "JOHN=FR02:00-03:00,SA17:00-18:00,SU20:00-21:00"
+        Employee(valid_input)
 
     def test_input_out_of_pattern(self):
         invalid_inputs = self.create_invalid_inputs()
