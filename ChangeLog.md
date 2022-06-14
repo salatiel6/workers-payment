@@ -1,3 +1,6 @@
+> ![](https://img.shields.io/badge/Jun_13,_2022-black) ![](https://img.shields.io/badge/v0.10.0-FEAT-blue)  
+> `Challenge solved and documented`
+
 > ![](https://img.shields.io/badge/Jun_13,_2022-black) ![](https://img.shields.io/badge/v0.9.0-FEAT-blue)  
 > `New tests for default and custom files`
 
