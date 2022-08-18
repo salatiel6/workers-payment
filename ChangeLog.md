@@ -1,3 +1,6 @@
+> ![](https://img.shields.io/badge/Aug_18,_2022-black) ![](https://img.shields.io/badge/v0.10.1-REFACTOR-red)  
+> `Changed constants.py config variables to its config.py file`
+
 > ![](https://img.shields.io/badge/Jun_13,_2022-black) ![](https://img.shields.io/badge/v0.10.0-FEAT-blue)  
 > `Challenge solved and documented`
 

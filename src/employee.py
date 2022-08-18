@@ -3,8 +3,7 @@ import re
 from datetime import datetime, timedelta
 
 from ioet_challenge.src.exceptions import FilePatternError
-from ioet_challenge.src.constants import WEEK_DAYS, WEEKEND_DAYS, PERIODS, \
-    HOUR_PAYMENT_VALUES
+from ioet_challenge.src.config import Config
 
 
 class Employee:
@@ -64,16 +63,26 @@ class Employee:
 
     @staticmethod
     def get_period(time) -> str:
-        if PERIODS["P1"]["entering"] <= time <= PERIODS["P1"]["exiting"]:
+        config = Config()
+
+        periods = config.periods
+
+        if periods["P1"]["entering"] <= time <= periods["P1"]["exiting"]:
             return "P1"
-        if PERIODS["P2"]["entering"] <= time <= PERIODS["P2"]["exiting"]:
+        if periods["P2"]["entering"] <= time <= periods["P2"]["exiting"]:
             return "P2"
-        if PERIODS["P3"]["entering"] <= time >= PERIODS["P3"]["exiting"]:
+        if periods["P3"]["entering"] <= time >= periods["P3"]["exiting"]:
             return "P3"
 
     @staticmethod
     def get_hour_payment(day, period) -> int:
-        if day in WEEK_DAYS:
-            return HOUR_PAYMENT_VALUES["week"][period]
-        if day in WEEKEND_DAYS:
-            return HOUR_PAYMENT_VALUES["weekend"][period]
+        config = Config()
+
+        week_days = config.week_days
+        weekend_days = config.weekend_days
+        hourly_payment_values = config.hourly_payment_values
+
+        if day in week_days:
+            return hourly_payment_values["week"][period]
+        if day in weekend_days:
+            return hourly_payment_values["weekend"][period]
