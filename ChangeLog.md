@@ -1,3 +1,6 @@
+> ![](https://img.shields.io/badge/Set_08,_2022-black) ![](https://img.shields.io/badge/v1.0.0-REFACTOR-red)  
+> `Started rebuilding the whole structure of the project`
+
 > ![](https://img.shields.io/badge/Aug_18,_2022-black) ![](https://img.shields.io/badge/v0.10.1-REFACTOR-red)  
 > `Changed constants.py config variables to its config.py file`
 
