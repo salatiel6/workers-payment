@@ -4,9 +4,10 @@ from exceptions import FileError
 
 
 class FileHandler:
-    def __init__(self, file="../worked_schedules.txt") -> None:
+    def __init__(self, file) -> None:
         self.__worked_schedules = self.read_file(file)
 
+    @property
     def worked_schedules(self) -> []:
         return self.__worked_schedules
 

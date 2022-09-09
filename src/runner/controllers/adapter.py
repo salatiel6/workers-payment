@@ -6,6 +6,7 @@ class Adapter:
     def __init__(self, worked_schedule: str) -> None:
         self.__worker_data = self.set_worker_data(worked_schedule)
 
+    @property
     def worker_data(self) -> {}:
         return self.__worker_data
 
@@ -27,15 +28,15 @@ class Adapter:
             day = day_n_hour[0:2]
 
             if day in config.week_days.keys():
-                worker_data["day"] = config.week_days[day]
+                worked["day"] = config.week_days[day]
             if day in config.weekend_days.keys():
-                worker_data["day"] = config.weekend_days[day]
+                worked["day"] = config.weekend_days[day]
 
             str_entering = day_n_hour[2:].split("-")[0]
             str_exiting = day_n_hour[2:].split("-")[1]
 
-            worked["entering"] = datetime.strptime(str_entering, "%H:%M")
-            worked["exiting"] = datetime.strptime(str_exiting, "%H:%M")
+            worked["start"] = datetime.strptime(str_entering, "%H:%M")
+            worked["finish"] = datetime.strptime(str_exiting, "%H:%M")
 
             worker_data["worked"].append(worked)
 

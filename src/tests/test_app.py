@@ -1,9 +1,12 @@
 import os
 
 from unittest import TestCase
-from controllers import FileHandler, Adapter
+from runner import Runner
+from runner.controllers import FileHandler, ScheduleValidator, Adapter,\
+    Worker, PaymentHandler
 from exceptions import FileError, FilePatternError
-from validators import ScheduleValidator
+from datetime import datetime
+
 
 class TestApp(TestCase):
     def test_default_file(self):
@@ -12,8 +15,8 @@ class TestApp(TestCase):
         It must pass without raising any exception.
         """
 
-        file_handler = FileHandler()
-        assert file_handler.worked_schedules()
+        file_handler = FileHandler("../worked_schedules.txt")
+        assert file_handler.worked_schedules
 
     def test_if_file_not_exists(self):
         """
@@ -49,13 +52,12 @@ class TestApp(TestCase):
         """
 
         valid_input = "JOHN=FR02:00-03:00,SA17:00-18:00,SU20:00-21:00"
-        schedule_validator = ScheduleValidator(valid_input)
-        assert schedule_validator.validate()
+        assert ScheduleValidator(valid_input)
 
     def test_schedule_validator_with_invalid_input(self):
         """
         Calling the ScheduleValidator class, passing some invalid inputs that
-        are created by create_invalid_input().
+        are created in a list.
         It must raise an FilePatternError exception for every iteration
         in the invalid_inputs list.
         If some iteration does not raise an FilePatterError exception,
@@ -63,22 +65,7 @@ class TestApp(TestCase):
         by the exception handler.
         """
 
-        invalid_inputs = self.create_invalid_inputs()
-
-        for invalid_input in invalid_inputs:
-            try:
-                schedule_validator = ScheduleValidator(invalid_input)
-                self.assertRaises(
-                    FilePatternError,
-                    schedule_validator.validate
-                )
-            except Exception:
-                raise Exception(f"Exeption not raised for this input: "
-                                f"{invalid_input}")
-
-    @staticmethod
-    def create_invalid_inputs():
-        return [
+        invalid_inputs = [
             "RENEMO10:00-12:00,TU10:00-12:00,SA14:00-18:00,SU20:00-21:00",
             "REN=EMO10:00-12:00,TU10:00-12:00,SA14:00-18:00,SU20:00-21:00",
             "RENEMO10:00-12:00,TU10:00-12:00,=SA14:00-18:00,SU20:00-21:00",
@@ -91,9 +78,86 @@ class TestApp(TestCase):
             "RENEMO10:00-12:00=TU10:00-12:00,SA14:00-18:00,SU20:00-21:00"
         ]
 
-    def test_adapter_with_valid_schedule(self):
+        for invalid_input in invalid_inputs:
+            try:
+                self.assertRaises(
+                    FilePatternError,
+                    ScheduleValidator, invalid_input
+                )
+            except Exception:
+                raise Exception(f"Exeption not raised for this input: "
+                                f"{invalid_input}")
+
+    def test_adapter(self):
         worked_schedule = "JAMES=TU09:00-12:00,WE10:00-14:00,TH01:00-04:00," \
                           "FR08:00-18:00,SU20:00-22:00"
 
         adapter = Adapter(worked_schedule)
-        print(adapter.worker_data())
+
+        assert adapter.worker_data
+
+    def test_worker_constructors(self):
+        worker_data = {
+            "name": "TESTER",
+            "worked": [
+                {
+                    "day": "monday",
+                    "start": datetime.strptime("10:00", "%H:%M"),
+                    "finish": datetime.strptime("10:00", "%H:%M")
+                },
+                {
+                    "day": "tuesday",
+                    "start": datetime.strptime("10:00", "%H:%M"),
+                    "finish": datetime.strptime("12:00", "%H:%M")
+                }
+            ]
+        }
+
+        worker = Worker(worker_data)
+
+        assert worker.name == "TESTER"
+        assert len(worker.worked) == 2
+
+    def test_payment_handler(self):
+        worker_data = {
+            "name": "TESTER",
+            "worked": [
+                {
+                    "day": "monday",
+                    "start": datetime.strptime("10:00", "%H:%M"),
+                    "finish": datetime.strptime("12:00", "%H:%M")
+                },
+                {
+                    "day": "tuesday",
+                    "start": datetime.strptime("10:00", "%H:%M"),
+                    "finish": datetime.strptime("12:00", "%H:%M")
+                },
+                {
+                    "day": "thursday",
+                    "start": datetime.strptime("01:00", "%H:%M"),
+                    "finish": datetime.strptime("03:00", "%H:%M")
+                },
+                {
+                    "day": "saturday",
+                    "start": datetime.strptime("14:00", "%H:%M"),
+                    "finish": datetime.strptime("18:00", "%H:%M")
+                },
+                {
+                    "day": "sunday",
+                    "start": datetime.strptime("20:00", "%H:%M"),
+                    "finish": datetime.strptime("21:00", "%H:%M")
+                }
+            ]
+        }
+
+        worker = Worker(worker_data)
+        payment_handler = PaymentHandler(worker)
+
+        worker.payment_amount = payment_handler.get_hour_payment()
+
+        assert worker.payment_amount == 215
+
+    def test_runner(self):
+        runner = Runner()
+        runner.build_components("../worked_schedules.txt")
+        runner.run_components()

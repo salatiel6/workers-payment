@@ -1,3 +1,6 @@
+> ![](https://img.shields.io/badge/Set_09,_2022-black) ![](https://img.shields.io/badge/v1.0.1-REFACTOR-red)  
+> `Application runnig with new structure`
+
 > ![](https://img.shields.io/badge/Set_08,_2022-black) ![](https://img.shields.io/badge/v1.0.0-REFACTOR-red)  
 > `Started rebuilding the whole structure of the project`
 
